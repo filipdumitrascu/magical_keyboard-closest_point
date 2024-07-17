@@ -21,6 +21,7 @@ int main(void)
 	 */
 	while (!exit) {
 		scanf("%ms", &command);
+
 		if (!strcmp(command, "INSERT")) {
 			scanf("%ms", &word);
 			trie_insert(trie, word);

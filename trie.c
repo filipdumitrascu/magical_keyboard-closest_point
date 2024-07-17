@@ -45,7 +45,7 @@ void trie_insert(trie_t *trie, char *key)
 {
 	trie_node_t *current = trie->root;
 
-	for (int i = 0; key[i] != '\0'; i++) { // letter by letter in the key
+	for (int i = 0; key[i] != '\0'; i++) { 
 		int letter = key[i] - 'a';
 
 		/**
@@ -58,7 +58,7 @@ void trie_insert(trie_t *trie, char *key)
 			current->n_children++;
 		}
 
-		current = current->children[letter]; // move on this node
+		current = current->children[letter];
 	}
 
 	/**
@@ -170,8 +170,9 @@ void dfs_autocorrect(trie_node_t *node, char *word, char *correct, int diff,
 	 * If there are more than k letters different
 	 * from word it exits the function
 	 */
-	if (diff > k)
+	if (diff > k) {
 		return;
+	}
 
 	/**
 	 * If in correct is a word with the same length as input word and if
@@ -216,8 +217,9 @@ void autocorrect(trie_t *trie, char *word, int k)
 	correct[0] = '\0';
 	dfs_autocorrect(trie->root, word, correct, 0, k, &ok);
 
-	if (!ok)
+	if (!ok) {
 		printf("No words found\n");
+	}
 
 	free(correct);
 }
@@ -260,11 +262,14 @@ void dfs_shortest(trie_node_t *node, char *complete, char *current,
 	 * in following recursions
 	 */
 	if (node->end_of_word) {
-		if (strlen(complete) == strlen(prefix))
+		if (strlen(complete) == strlen(prefix)) {
 			strcpy(complete, current);
+		}
 
-		if (strlen(current) < strlen(complete))
+		if (strlen(current) < strlen(complete)) {
 			strcpy(complete, current);
+		}
+
 		return;
 	}
 
@@ -341,9 +346,11 @@ void autocomplete(trie_t *trie, char *prefix, int criterion)
 			printf("No words found\n");
 			printf("No words found\n");
 			printf("No words found\n");
+		
 		} else {
 			printf("No words found\n");
 		}
+		
 		free(complete);
 		free(current);
 		return;
@@ -357,6 +364,7 @@ void autocomplete(trie_t *trie, char *prefix, int criterion)
 	} else if (criterion == 2) {
 		dfs_shortest(node, complete, current, prefix);
 		printf("%s\n", complete);
+	
 	} else if (criterion == 3) {
 		dfs_frequent(node, complete, current, &max);
 		printf("%s\n", complete);
